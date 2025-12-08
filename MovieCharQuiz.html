@@ -1,0 +1,1699 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Which Breaking Bad Character Are You?</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    :root {
+      --bg-color: #050608;
+      --bg-elevated: #11131a;
+      --bg-soft: #181b25;
+      --accent: #00b894;
+      --accent-soft: rgba(0, 184, 148, 0.16);
+      --accent-strong: #00ffd0;
+      --danger: #ff7675;
+      --text-main: #f7f7ff;
+      --text-muted: #a8afc1;
+      --text-soft: #747c92;
+      --border-subtle: #2a3040;
+      --option-hover: #1f2533;
+      --option-active: #252d3e;
+      --shadow-soft: 0 18px 40px rgba(0, 0, 0, 0.78);
+      --shadow-subtle: 0 10px 30px rgba(0, 0, 0, 0.5);
+      --radius-lg: 18px;
+      --radius-md: 12px;
+      --radius-pill: 999px;
+      --transition-fast: 0.16s ease-out;
+      --transition-med: 0.23s ease;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html,
+    body {
+      height: 100%;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text",
+        "Segoe UI", sans-serif;
+      background: radial-gradient(circle at top left, #18242e 0, #050608 55%),
+        radial-gradient(circle at bottom right, #18272b 0, #050608 55%);
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px 12px;
+    }
+
+    .app-shell {
+      width: 100%;
+      max-width: 960px;
+      background: radial-gradient(circle at top, #171b28 0, #090b11 52%, #050608 100%);
+      border-radius: 24px;
+      box-shadow: var(--shadow-soft);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      padding: 22px 22px 26px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .app-shell::before {
+      content: "";
+      position: absolute;
+      inset: -120px;
+      background:
+        radial-gradient(circle at 0% 0%, rgba(0, 184, 148, 0.2) 0, transparent 55%),
+        radial-gradient(circle at 100% 100%, rgba(116, 125, 172, 0.16) 0, transparent 55%);
+      opacity: 0.6;
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    header.app-header {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 18px;
+    }
+
+    .brand-group {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .bb-pill {
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      background: radial-gradient(circle at 30% 20%, #a1ffe5 0, #00b894 40%, #006f56 100%);
+      box-shadow: 0 0 18px rgba(0, 184, 148, 0.7);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      color: #02100a;
+      font-size: 20px;
+      letter-spacing: 0.03em;
+    }
+
+    .title-stack h1 {
+      font-size: 1.35rem;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .title-stack p {
+      font-size: 0.9rem;
+      color: var(--text-soft);
+      max-width: 360px;
+    }
+
+    .meta-pill-row {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .meta-pill {
+      border-radius: var(--radius-pill);
+      padding: 5px 10px 5px 8px;
+      background: rgba(15, 19, 28, 0.9);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.78rem;
+      color: var(--text-muted);
+    }
+
+    .dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      background: var(--accent);
+      box-shadow: 0 0 10px rgba(0, 184, 148, 0.7);
+    }
+
+    .meta-pill span.highlight {
+      color: var(--accent-strong);
+      font-weight: 600;
+    }
+
+    .quiz-card {
+      background: rgba(8, 10, 18, 0.92);
+      border-radius: var(--radius-lg);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      padding: 18px 16px 16px;
+      box-shadow: var(--shadow-subtle);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .quiz-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        130deg,
+        rgba(111, 207, 151, 0.08),
+        transparent 45%,
+        rgba(116, 125, 172, 0.12)
+      );
+      opacity: 0.7;
+      pointer-events: none;
+      mix-blend-mode: soft-light;
+    }
+
+    .quiz-inner {
+      position: relative;
+      z-index: 1;
+    }
+
+    .top-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+
+    .progress-wrapper {
+      flex: 1;
+    }
+
+    .progress-label-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 6px;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    .progress-label-row span strong {
+      color: var(--accent-strong);
+    }
+
+    .progress-bar {
+      width: 100%;
+      height: 8px;
+      background: #141825;
+      border-radius: 999px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .progress-fill {
+      position: absolute;
+      inset: 0;
+      width: 0%;
+      background: linear-gradient(90deg, #00b894, #00e0b0);
+      border-radius: inherit;
+      box-shadow: 0 0 12px rgba(0, 224, 176, 0.65);
+      transition: width var(--transition-med);
+    }
+
+    .question-pill {
+      white-space: nowrap;
+      font-size: 0.8rem;
+      color: var(--text-soft);
+      border-radius: var(--radius-pill);
+      padding: 6px 10px;
+      background: rgba(9, 13, 22, 0.9);
+      border: 1px solid rgba(255, 255, 255, 0.07);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .question-pill span.badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 18px;
+      height: 18px;
+      border-radius: 6px;
+      background: var(--accent-soft);
+      color: var(--accent-strong);
+      font-size: 0.78rem;
+      font-weight: 700;
+    }
+
+    .question-text {
+      margin-bottom: 14px;
+      font-size: 1rem;
+      line-height: 1.5;
+    }
+
+    .question-text span.tone {
+      color: var(--text-soft);
+      font-size: 0.85rem;
+      display: block;
+      margin-top: 2px;
+    }
+
+    .options-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+
+    @media (min-width: 640px) {
+      .options-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    .option-card {
+      position: relative;
+      border-radius: var(--radius-md);
+      padding: 10px 11px 10px 12px;
+      background: rgba(16, 20, 32, 0.95);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      color: var(--text-main);
+      font-size: 0.9rem;
+      cursor: pointer;
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      transition:
+        transform var(--transition-fast),
+        box-shadow var(--transition-fast),
+        border-color var(--transition-fast),
+        background var(--transition-fast),
+        transform 0.08s ease-out;
+      overflow: hidden;
+    }
+
+    .option-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at top left, rgba(0, 184, 148, 0.08), transparent 52%);
+      opacity: 0;
+      transition: opacity var(--transition-fast);
+      pointer-events: none;
+    }
+
+    .option-card:hover {
+      transform: translateY(-2px) translateZ(0);
+      box-shadow: 0 14px 28px rgba(0, 0, 0, 0.8);
+      border-color: rgba(0, 224, 176, 0.7);
+      background: var(--option-hover);
+    }
+
+    .option-card:active {
+      transform: translateY(0px) scale(0.995);
+      background: var(--option-active);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.75);
+    }
+
+    .option-card:hover::before {
+      opacity: 1;
+    }
+
+    .option-key {
+      width: 22px;
+      height: 22px;
+      border-radius: 999px;
+      background: rgba(0, 184, 148, 0.1);
+      border: 1px solid rgba(0, 224, 176, 0.4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.78rem;
+      color: var(--accent-strong);
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    .option-label {
+      line-height: 1.4;
+      color: var(--text-main);
+    }
+
+    .option-label span.meta {
+      display: block;
+      font-size: 0.78rem;
+      color: var(--text-soft);
+      margin-top: 1px;
+    }
+
+    .bottom-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      margin-top: 4px;
+      flex-wrap: wrap;
+    }
+
+    .nav-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn {
+      position: relative;
+      border-radius: var(--radius-pill);
+      border: 1px solid transparent;
+      padding: 7px 14px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: #121623;
+      color: var(--text-muted);
+      transition:
+        background var(--transition-fast),
+        color var(--transition-fast),
+        box-shadow var(--transition-fast),
+        border-color var(--transition-fast),
+        transform 0.08s ease-out;
+    }
+
+    .btn span.icon {
+      font-size: 1rem;
+    }
+
+    .btn-primary {
+      background: linear-gradient(120deg, #00b894, #00e0b0);
+      color: #020806;
+      border-color: rgba(0, 224, 176, 0.95);
+      box-shadow: 0 8px 18px rgba(0, 224, 176, 0.32);
+    }
+
+    .btn-primary:hover {
+      background: linear-gradient(120deg, #00e0b0, #37ffc8);
+      box-shadow: 0 10px 22px rgba(0, 224, 176, 0.5);
+      transform: translateY(-1px);
+    }
+
+    .btn-primary:active {
+      transform: translateY(0px) scale(0.99);
+      box-shadow: 0 7px 16px rgba(0, 224, 176, 0.4);
+    }
+
+    .btn-ghost {
+      background: transparent;
+      border-color: rgba(255, 255, 255, 0.14);
+      color: var(--text-muted);
+    }
+
+    .btn-ghost:hover {
+      background: rgba(15, 19, 32, 0.9);
+      color: var(--text-main);
+      border-color: rgba(255, 255, 255, 0.25);
+      transform: translateY(-1px);
+    }
+
+    .btn-ghost:active {
+      transform: translateY(0px) scale(0.99);
+    }
+
+    .btn-disabled {
+      opacity: 0.5;
+      cursor: default;
+      pointer-events: none;
+      box-shadow: none;
+      transform: none;
+    }
+
+    .helper-text {
+      font-size: 0.78rem;
+      color: var(--text-soft);
+    }
+
+    .helper-text span.em {
+      color: var(--accent-strong);
+    }
+
+    .result-section {
+      margin-top: 20px;
+      padding: 16px 14px 15px;
+      border-radius: var(--radius-lg);
+      background: radial-gradient(circle at top, #141824 0, #06070c 70%);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: var(--shadow-subtle);
+      display: none;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .result-section::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at top left, rgba(0, 184, 148, 0.15), transparent 55%),
+        radial-gradient(circle at bottom right, rgba(255, 255, 255, 0.06), transparent 60%);
+      opacity: 0.65;
+      mix-blend-mode: soft-light;
+      pointer-events: none;
+    }
+
+    .result-inner {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 14px;
+    }
+
+    @media (min-width: 720px) {
+      .result-inner {
+        grid-template-columns: minmax(0, 1.2fr) minmax(0, 1.15fr);
+        align-items: center;
+      }
+    }
+
+    .result-main {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .result-tag {
+      font-size: 0.78rem;
+      color: var(--accent-strong);
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .result-tag span.bar {
+      width: 18px;
+      height: 1px;
+      background: var(--accent-strong);
+    }
+
+    .result-name {
+      font-size: 1.65rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .result-alias {
+      font-size: 0.96rem;
+      color: var(--text-soft);
+    }
+
+    .result-description {
+      margin-top: 4px;
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    .trait-chips {
+      margin-top: 4px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .trait-chip {
+      font-size: 0.78rem;
+      padding: 4px 9px;
+      border-radius: var(--radius-pill);
+      background: rgba(17, 23, 34, 0.95);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      color: var(--text-muted);
+    }
+
+    .result-meta {
+      margin-top: 6px;
+      font-size: 0.8rem;
+      color: var(--text-soft);
+    }
+
+    .portrait-wrap {
+      position: relative;
+      border-radius: 18px;
+      overflow: hidden;
+      background: #050608;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: 0 16px 32px rgba(0, 0, 0, 0.84);
+      min-height: 210px;
+      max-height: 340px;
+      display: flex;
+      align-items: stretch;
+      justify-content: center;
+    }
+
+    .portrait-glow {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 20% 10%, rgba(0, 184, 148, 0.55), transparent 65%),
+        radial-gradient(circle at 90% 100%, rgba(255, 255, 255, 0.18), transparent 70%);
+      mix-blend-mode: screen;
+      opacity: 0.55;
+      pointer-events: none;
+    }
+
+    .portrait-inner {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    #characterImage {
+      width: 100%;
+      height: 100%;
+      max-height: 340px;
+      object-fit: cover;
+      object-position: top;
+      border-radius: 14px;
+      display: block;
+      filter: saturate(1.03) contrast(1.03);
+    }
+
+    .portrait-fallback {
+      position: absolute;
+      inset: 0;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-soft);
+      font-size: 0.86rem;
+      background: radial-gradient(circle at top, #141824 0, #050608 65%);
+      text-align: center;
+      padding: 12px;
+    }
+
+    .result-actions {
+      margin-top: 10px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .btn-share {
+      background: rgba(19, 24, 37, 0.95);
+      border-color: rgba(255, 255, 255, 0.14);
+      color: var(--text-muted);
+    }
+
+    .btn-share:hover {
+      background: rgba(26, 32, 50, 0.98);
+      color: var(--text-main);
+      border-color: rgba(255, 255, 255, 0.26);
+    }
+
+    .note-row {
+      margin-top: 6px;
+      font-size: 0.78rem;
+      color: var(--text-soft);
+    }
+
+    .note-row span.warn {
+      color: var(--danger);
+    }
+
+    .pill-divider {
+      width: 100%;
+      height: 1px;
+      background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.18),
+        transparent
+      );
+      margin: 16px 0 10px;
+      opacity: 0.85;
+    }
+
+    .screenshot-hint {
+      margin-top: 4px;
+      font-size: 0.8rem;
+      color: var(--text-soft);
+    }
+
+    @media (max-width: 480px) {
+      .app-shell {
+        padding: 18px 14px 20px;
+        border-radius: 20px;
+      }
+
+      header.app-header {
+        gap: 10px;
+      }
+
+      .brand-group {
+        width: 100%;
+      }
+
+      .title-stack h1 {
+        font-size: 1.18rem;
+      }
+
+      .quiz-card {
+        padding: 14px 12px 12px;
+      }
+
+      .question-text {
+        font-size: 0.96rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="app-shell" id="appRoot">
+    <header class="app-header">
+      <div class="brand-group">
+        <div class="bb-pill">BB</div>
+        <div class="title-stack">
+          <h1>Which Breaking Bad Character Are You?</h1>
+          <p>
+            A dark, sarcastic quiz to see which Albuquerque troublemaker is closest to your mind.
+          </p>
+        </div>
+      </div>
+      <div>
+        <div class="meta-pill-row">
+          <div class="meta-pill">
+            <span class="dot"></span>
+            <span><span class="highlight">12</span> short questions</span>
+          </div>
+          <div class="meta-pill">
+            <span class="dot"></span>
+            <span>Balanced results for all main characters</span>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <section class="quiz-card" id="quizSection">
+        <div class="quiz-inner">
+          <div class="top-row">
+            <div class="progress-wrapper">
+              <div class="progress-label-row">
+                <span>
+                  Question
+                  <strong id="questionIndexLabel">1</strong>
+                  /
+                  <strong id="questionTotalLabel">12</strong>
+                </span>
+                <span id="progressPercentLabel">0%</span>
+              </div>
+              <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+              </div>
+            </div>
+            <div class="question-pill">
+              <span class="badge" id="moodBadge">⚗️</span>
+              <span id="moodLabel">First bad idea</span>
+            </div>
+          </div>
+
+          <div id="questionContainer">
+            <div class="question-text" id="questionText"></div>
+            <div class="options-grid" id="optionsGrid"></div>
+          </div>
+
+          <div class="bottom-row">
+            <div class="nav-row">
+              <button class="btn btn-ghost btn-disabled" id="prevBtn" type="button">
+                <span class="icon">⟵</span>
+                <span>Back</span>
+              </button>
+              <button class="btn btn-primary" id="nextBtn" type="button">
+                <span class="label" id="nextBtnLabel">Skip</span>
+                <span class="icon">⟶</span>
+              </button>
+            </div>
+            <div class="helper-text" id="helperText">
+              Choose one option. <span class="em">Tell the truth. Mostly.</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div class="pill-divider"></div>
+
+      <section class="result-section" id="resultSection">
+        <div class="result-inner" id="resultCard">
+          <div class="result-main">
+            <div class="result-tag">
+              <span class="bar"></span>
+              <span>Your Breaking Bad match</span>
+            </div>
+            <div class="result-name" id="characterName">–</div>
+            <div class="result-alias" id="characterAlias"></div>
+            <div class="result-description" id="characterDescription"></div>
+            <div class="trait-chips" id="traitChips"></div>
+            <div class="result-meta" id="resultMeta"></div>
+            <div class="screenshot-hint">
+              Your answers and traits add up to this match. Take a screenshot of this card if you want to save or share it.
+            </div>
+            <div class="result-actions">
+              <button class="btn btn-primary" id="restartBtn" type="button">
+                <span class="icon">🔁</span>
+                <span>Restart quiz</span>
+              </button>
+              <button class="btn btn-share" id="shareBtn" type="button">
+                <span class="icon">📤</span>
+                <span>Share result</span>
+              </button>
+            </div>
+            <div class="note-row">
+              <span class="warn">Disclaimer:</span>
+              No blue crystals were used to make this quiz.
+            </div>
+          </div>
+          <div class="portrait-wrap">
+            <div class="portrait-glow"></div>
+            <div class="portrait-inner">
+              <img
+                id="characterImage"
+                src=""
+                alt="Breaking Bad character portrait"
+              />
+              <div class="portrait-fallback" id="portraitFallback">
+                Image could not load. Add or change the image link for this character in the code.
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    // Character data (images can be edited manually)
+    // -------------------------------
+    const CHARACTERS = {
+      walter: {
+        name: "Walter White",
+        alias: "Heisenberg",
+        img: "images/walterwhite.jpg",
+        traits: ["Planner", "Proud", "Secretive"],
+        description:
+          "You plan hard, hide big things, and think you can fix any mess if you just think long enough."
+      },
+      jesse: {
+        name: "Jesse Pinkman",
+        alias: "Cap n' Cook",
+        img: "images/Jesse pinkman.jpg",
+        traits: ["Emotional", "Loyal", "Messy"],
+        description:
+          "You feel things deeply, hurt hard, and still try to protect people even when you are falling apart."
+      },
+      saul: {
+        name: "Saul Goodman",
+        alias: "James McGill",
+        img: "images/saul.jpg",
+        traits: ["Talker", "Smooth", "Rule bender"],
+        description:
+          "You talk fast, think fast, and always look for the trick that turns a bad deal into your win."
+      },
+      skyler: {
+        name: "Skyler White",
+        alias: "Crisis Accountant",
+        img: "images/skyler.jpg",
+        traits: ["Protective", "Smart", "Tired"],
+        description:
+          "You carry other people’s problems, try to keep things clean, and break rules only when you feel forced."
+      },
+      mike: {
+        name: "Mike Ehrmantraut",
+        alias: "Problem Solver",
+        img: "images/mike.jpg",
+        traits: ["Calm", "Cold", "Careful"],
+        description:
+          "You stay quiet, watch everything, and step in only when you know exactly what needs to be done."
+      },
+      gus: {
+        name: "Gus Fring",
+        alias: "The Chicken Man",
+        img: "images/Gustavo Fring.jpg",
+        traits: ["Polite", "Serious", "Patient"],
+        description:
+          "You act calm, plan far ahead, and keep your anger under the surface until it is useful."
+      },
+      hank: {
+        name: "Hank Schrader",
+        alias: "DEA Agent",
+        img: "images/hank.jpg",
+        traits: ["Brave", "Loud", "Stubborn"],
+        description:
+          "You rush in, joke a lot, and push forward even when you are scared or hurt."
+      },
+      marie: {
+        name: "Marie Schrader",
+        alias: "Purple Problem",
+        img: "images/Marie Schrader.jpg",
+        traits: ["Dramatic", "Sensitive", "Loyal"],
+        description:
+          "You feel slight things strongly, tell your side loudly, and still care a lot about your people."
+      },
+      tuco: {
+        name: "Tuco Salamanca",
+        alias: "Chaos Engine",
+        img: "images/tuco.jpg",
+        traits: ["Wild", "Fast", "Explosive"],
+        description:
+          "You jump first, shout later, and scare people without even trying when you get angry."
+      },
+      lydia: {
+        name: "Lydia Rodarte-Quayle",
+        alias: "Nervous Boss",
+        img: "images/Lydia.jpg",
+        traits: ["Anxious", "Neat", "Careful"],
+        description:
+          "You worry about every detail, plan ten steps ahead, and still feel like something is about to go wrong."
+      },
+      todd: {
+        name: "Todd Alquist",
+        alias: "Polite Problem",
+        img: "images/Todd.jpg",
+        traits: ["Calm", "Cold", "Obedient"],
+        description:
+          "You stay polite, follow orders, and do scary things with a straight, friendly face."
+      },
+      gale: {
+        name: "Gale Boetticher",
+        alias: "Nice Chemist",
+        img: "images/gale.jpg",
+        traits: ["Kind", "Nerdy", "Soft"],
+        description:
+          "You love your work, trust people too much, and want a quiet life even when the world is loud."
+      },
+      jane: {
+        name: "Jane Margolis",
+        alias: "Runaway Artist",
+        img: "images/jane from breaking bad.jpg",
+        traits: ["Creative", "Guarded", "Hurting"],
+        description:
+          "You want freedom, hate being controlled, and sometimes pull away even from people you care about."
+      },
+      combo: {
+        name: "Combo Ortega",
+        alias: "Street Friend",
+        img: "images/combo.jpg",
+        traits: ["Chill", "Risky", "Social"],
+        description:
+          "You like to hang out, say yes to wild ideas, and think the story will be worth it later."
+      },
+      hector: {
+        name: "Hector Salamanca",
+        alias: "Bell Ringer",
+        img: "images/Hector Salamanca.jpg",
+        traits: ["Bitter", "Proud", "Old school"],
+        description:
+          "You never forget a hit, keep anger for years, and enjoy payback more than peace."
+      },
+      skinnyPete: {
+        name: "Skinny Pete",
+        alias: "Chill Thinker",
+        img: "images/download (18).jpg",
+        traits: ["Relaxed", "Deep", "Low key"],
+        description:
+          "You seem spaced out but notice more than people think, and you do not really want the spotlight."
+      },
+      badger: {
+        name: "Badger Mayhew",
+        alias: "Idea Guy",
+        img: "images/download (17).jpg",
+        traits: ["Funny", "Loyal", "Chaotic"],
+        description:
+          "You talk nonsense, make people laugh, and somehow end up in strange plans with your friends."
+      }
+    };
+
+    const TRAIT_KEYS = ["planner", "chaos", "empath", "ruthless", "anxious", "comic"];
+
+    function emptyTraitScores() {
+      return {
+        planner: 0,
+        chaos: 0,
+        empath: 0,
+        ruthless: 0,
+        anxious: 0,
+        comic: 0
+      };
+    }
+
+    const TRAIT_TO_CHARACTER = {
+      walter:   { planner: 2, ruthless: 2, anxious: 1 },
+      jesse:    { chaos: 2, empath: 2, anxious: 1 },
+      saul:     { planner: 1, comic: 2, chaos: 1 },
+      skyler:   { planner: 2, anxious: 2 },
+      mike:     { planner: 2, ruthless: 2 },
+      gus:      { planner: 3, ruthless: 1 },
+      hank:     { chaos: 2, ruthless: 1, empath: 1 },
+      marie:    { anxious: 2, comic: 1 },
+      tuco:     { chaos: 3, ruthless: 1 },
+      lydia:    { anxious: 3, planner: 1 },
+      todd:     { ruthless: 3, planner: 1 },
+      gale:     { empath: 3, planner: 1 },
+      jane:     { empath: 2, chaos: 1, anxious: 2 },
+      combo:    { chaos: 2, comic: 1 },
+      hector:   { ruthless: 3, anxious: 1 },
+      skinnyPete:{ chaos: 1, comic: 2, empath: 1 },
+      badger:   { chaos: 1, comic: 3 }
+    };
+
+    const QUESTIONS = [
+      {
+        moodIcon: "⚗️",
+        moodLabel: "Small job, big crime",
+        text: "Your small side job suddenly becomes illegal but brings in a lot of money. What do you do first?",
+        options: [
+          {
+            label: "Sit down, make a plan, and turn it into a full, clean system.",
+            meta: "Think first, act later.",
+            traits: { planner: 2, ruthless: 1 }
+          },
+          {
+            label: "Freak out, swear, and then say you will do it \"just for a while\".",
+            meta: "Scared but tempted.",
+            traits: { empath: 1, anxious: 1, chaos: 1 }
+          },
+          {
+            label: "Look for a legal cover, a fake story, and a bigger cut.",
+            meta: "Turn trouble into a deal.",
+            traits: { planner: 1, comic: 1, ruthless: 1 }
+          },
+          {
+            label: "Stay calm, check the risks, and make rules to keep it under control.",
+            meta: "Safety first, feelings later.",
+            traits: { planner: 2, ruthless: 1 }
+          },
+          {
+            label: "Laugh, call your friends, and say this will be \"fun and stupid\".",
+            meta: "Vibes over safety.",
+            traits: { chaos: 2, comic: 1 }
+          }
+        ]
+      },
+      {
+        moodIcon: "💼",
+        moodLabel: "Shady promotion",
+        text: "Your boss offers you a big promotion. You must cover some very strange numbers in the books. What do you do?",
+        options: [
+          {
+            label: "Take it, fix the numbers better than they asked, and slowly take control.",
+            meta: "Power move.",
+            traits: { planner: 2, ruthless: 1 }
+          },
+          {
+            label: "Say no, say it is wrong, and then think about it for days.",
+            meta: "Strong morals, loud thoughts.",
+            traits: { empath: 1, anxious: 2 }
+          },
+          {
+            label: "Say yes, ask for more money, and smile like it is all normal.",
+            meta: "Money and charm.",
+            traits: { comic: 1, planner: 1, ruthless: 1 }
+          },
+          {
+            label: "Say yes, try to clean it, and lie awake at night anyway.",
+            meta: "Fixer with stress.",
+            traits: { planner: 1, anxious: 2 }
+          },
+          {
+            label: "Agree, write a to-do list, and follow orders without talking much.",
+            meta: "Quiet worker.",
+            traits: { planner: 1, ruthless: 1, anxious: 1 }
+          }
+        ]
+      },
+      {
+        moodIcon: "🧨",
+        moodLabel: "Public insult",
+        text: "Someone makes a rude joke about you in front of people you want to impress. What do you do?",
+        options: [
+          {
+            label: "Stay calm, smile, and remember it for later payback.",
+            meta: "Silent revenge.",
+            traits: { planner: 1, ruthless: 2 }
+          },
+          {
+            label: "Hit back fast with your own rude line, then maybe go too far.",
+            meta: "Loud and sharp.",
+            traits: { chaos: 2, comic: 1 }
+          },
+          {
+            label: "Turn it into a joke, win the room back with your charm.",
+            meta: "Crowd on your side.",
+            traits: { comic: 2, empath: 1 }
+          },
+          {
+            label: "Say nothing, watch them, and deal with it privately later.",
+            meta: "Low drama, high memory.",
+            traits: { planner: 1, ruthless: 1, anxious: 1 }
+          },
+          {
+            label: "Shrink inside, think about it all night, and say little.",
+            meta: "Quiet hurt.",
+            traits: { empath: 2, anxious: 1 }
+          }
+        ]
+      },
+      {
+        moodIcon: "🚬",
+        moodLabel: "Bad week coping",
+        text: "Life is heavy and you are tired. What do you really do most of the time?",
+        options: [
+          {
+            label: "Work more, plan more, and tell yourself this is \"being strong\".",
+            meta: "Overwork as armor.",
+            traits: { planner: 2, anxious: 1 }
+          },
+          {
+            label: "Do risky things, tell yourself you are just living \"fast\".",
+            meta: "Self-destruction lite.",
+            traits: { chaos: 2, empath: 1 }
+          },
+          {
+            label: "Carry everyone else’s stress, then break down alone.",
+            meta: "Helper who is not okay.",
+            traits: { empath: 2, anxious: 1 }
+          },
+          {
+            label: "Hang out, joke around, and pretend it does not get to you.",
+            meta: "Hide pain with laughs.",
+            traits: { comic: 2, chaos: 1 }
+          },
+          {
+            label: "Shut down feelings and just follow your daily routine.",
+            meta: "Cold autopilot.",
+            traits: { ruthless: 2, planner: 1 }
+          }
+        ]
+      },
+      {
+        moodIcon: "📦",
+        moodLabel: "Big mess, not yours",
+        text: "You walk into a huge mess you did not make, but now it is your problem. What is your move?",
+        options: [
+          {
+            label: "Clean it up step by step and say very little.",
+            meta: "Silent cleaner.",
+            traits: { planner: 2, ruthless: 1 }
+          },
+          {
+            label: "Fix it, but use it later as leverage.",
+            meta: "You owe me.",
+            traits: { planner: 1, ruthless: 1, comic: 1 }
+          },
+          {
+            label: "Try to fix it halfway, then get lost in the middle.",
+            meta: "Good intent, bad follow-through.",
+            traits: { empath: 1, chaos: 2 }
+          },
+          {
+            label: "Complain loudly about it and still stay in the story.",
+            meta: "Drama helper.",
+            traits: { comic: 1, empath: 1, anxious: 1 }
+          },
+          {
+            label: "Overthink every detail and make five backup plans.",
+            meta: "Control by worry.",
+            traits: { planner: 1, anxious: 2 }
+          }
+        ]
+      },
+      {
+        moodIcon: "🧪",
+        moodLabel: "Dirty but legal",
+        text: "You find a way to make a lot of money that is legal, but feels very wrong. What do you do?",
+        options: [
+          {
+            label: "Use it, grow it, and tell yourself logic matters more than feelings.",
+            meta: "Head over heart.",
+            traits: { planner: 2, ruthless: 1 }
+          },
+          {
+            label: "Say no, then think for hours about \"what if\".",
+            meta: "Ethics with FOMO.",
+            traits: { empath: 2, anxious: 1 }
+          },
+          {
+            label: "Take a step back, find a way to be involved from a distance.",
+            meta: "Hands clean, mind dirty.",
+            traits: { planner: 1, ruthless: 1, anxious: 1 }
+          },
+          {
+            label: "Say yes, follow instructions, and try not to think too hard.",
+            meta: "Obedient trouble.",
+            traits: { ruthless: 2, anxious: 1 }
+          },
+          {
+            label: "Try it once, feel bad, and start planning an exit.",
+            meta: "Guilt with a plan.",
+            traits: { empath: 1, anxious: 2 }
+          }
+        ]
+      },
+      {
+        moodIcon: "🏚️",
+        moodLabel: "Family drama night",
+        text: "A family dinner turns into a slow, mean argument. How do you stay alive in that room?",
+        options: [
+          {
+            label: "Stay quiet, watch everyone, and remember who hit below the belt.",
+            meta: "Spy at the table.",
+            traits: { planner: 1, ruthless: 1, anxious: 1 }
+          },
+          {
+            label: "Make jokes, change the topic, and try to make people laugh.",
+            meta: "Clown as shield.",
+            traits: { comic: 2, empath: 1 }
+          },
+          {
+            label: "Try to calm everyone, hear all sides, and go home exhausted.",
+            meta: "Family therapist.",
+            traits: { empath: 2, anxious: 1 }
+          },
+          {
+            label: "Throw in one very honest line that turns the room silent.",
+            meta: "Truth bomb.",
+            traits: { chaos: 2, ruthless: 1 }
+          },
+          {
+            label: "Leave early with an excuse and enjoy the quiet outside.",
+            meta: "Escape artist.",
+            traits: { anxious: 2, planner: 1 }
+          }
+        ]
+      },
+      {
+        moodIcon: "🕵️",
+        moodLabel: "Secret in sight",
+        text: "Someone you care about is clearly hiding something risky. What do you do?",
+        options: [
+          {
+            label: "Watch quietly, collect signs, and wait for the right time to speak.",
+            meta: "Soft detective.",
+            traits: { planner: 1, anxious: 1, ruthless: 1 }
+          },
+          {
+            label: "Ask them straight out with strong feelings.",
+            meta: "Heart on the table.",
+            traits: { empath: 2, chaos: 1 }
+          },
+          {
+            label: "Offer to help manage it, even if it is dark.",
+            meta: "Partner in crime.",
+            traits: { planner: 1, ruthless: 1, empath: 1 }
+          },
+          {
+            label: "Stay near, protect them quietly, and only step in at the last moment.",
+            meta: "Guard dog style.",
+            traits: { planner: 1, empath: 1, ruthless: 1 }
+          },
+          {
+            label: "Ignore it as long as you can and hope it goes away.",
+            meta: "Head in sand.",
+            traits: { anxious: 1, chaos: 1, comic: 1 }
+          }
+        ]
+      },
+      {
+        moodIcon: "🧊",
+        moodLabel: "Someone cries",
+        text: "Someone suddenly cries in front of you. How do you react most of the time?",
+        options: [
+          {
+            label: "Try to fix the problem with logic and steps.",
+            meta: "Problem solver mode.",
+            traits: { planner: 2, anxious: 1 }
+          },
+          {
+            label: "Get awkward, but try your best to comfort them.",
+            meta: "Soft but clumsy.",
+            traits: { empath: 2, comic: 1 }
+          },
+          {
+            label: "Listen, ask questions, and remember details.",
+            meta: "Calm listener.",
+            traits: { empath: 2, planner: 1 }
+          },
+          {
+            label: "Stand close, say little, and just stay with them.",
+            meta: "Silent support.",
+            traits: { empath: 1, ruthless: 1, anxious: 1 }
+          },
+          {
+            label: "Make a dark joke, then later worry if it was the wrong time.",
+            meta: "Joke then guilt.",
+            traits: { comic: 2, anxious: 1 }
+          }
+        ]
+      },
+      {
+        moodIcon: "🎯",
+        moodLabel: "50/50 big risk",
+        text: "You get one risky chance that could change your life for good or for bad. You think the chance is 50/50. What do you do?",
+        options: [
+          {
+            label: "Study it, push the odds in your favor, then do it.",
+            meta: "Smart gamble.",
+            traits: { planner: 2, chaos: 1 }
+          },
+          {
+            label: "Go for it on gut feeling.",
+            meta: "Heart gamble.",
+            traits: { chaos: 2, empath: 1 }
+          },
+          {
+            label: "Negotiate better terms before you say yes.",
+            meta: "Deal maker.",
+            traits: { planner: 1, ruthless: 1, comic: 1 }
+          },
+          {
+            label: "Say no, but think about it for years.",
+            meta: "Safe, but haunted.",
+            traits: { anxious: 2, empath: 1 }
+          },
+          {
+            label: "Only do it if it protects people you care about.",
+            meta: "Risk for others.",
+            traits: { empath: 2, planner: 1 }
+          }
+        ]
+      },
+      {
+        moodIcon: "🧷",
+        moodLabel: "Friend’s dumb plan",
+        text: "A friend invites you into a plan that is clearly stupid and maybe dangerous. What do you do?",
+        options: [
+          {
+            label: "Help, but rewrite the plan so it is less stupid.",
+            meta: "Fixing from inside.",
+            traits: { planner: 2, empath: 1 }
+          },
+          {
+            label: "Join, complain, but stay by their side anyway.",
+            meta: "Grumpy ride or die.",
+            traits: { empath: 1, comic: 1, chaos: 1 }
+          },
+          {
+            label: "Say it is a bad idea, then still show up when things get serious.",
+            meta: "Loud conscience.",
+            traits: { empath: 1, ruthless: 1, anxious: 1 }
+          },
+          {
+            label: "Jump in with way too much energy.",
+            meta: "Danger fan.",
+            traits: { chaos: 2, ruthless: 1 }
+          },
+          {
+            label: "Offer contacts and tips but keep your hands clean.",
+            meta: "Advisor role.",
+            traits: { planner: 1, ruthless: 1, comic: 1 }
+          }
+        ]
+      },
+      {
+        moodIcon: "⏳",
+        moodLabel: "Everything falls apart",
+        text: "Everything goes wrong at once. You know things are about to crash. What is your final move?",
+        options: [
+          {
+            label: "Build one last plan to fix it or go out in style.",
+            meta: "Final big move.",
+            traits: { planner: 2, chaos: 1 }
+          },
+          {
+            label: "Try to save the people you care about, even if it hurts you.",
+            meta: "Self-sacrifice.",
+            traits: { empath: 2, anxious: 1 }
+          },
+          {
+            label: "Trade secrets, cut deals, and try to walk away alive.",
+            meta: "Survival brain.",
+            traits: { planner: 1, ruthless: 1, anxious: 1 }
+          },
+          {
+            label: "Make sure your enemies fall with you.",
+            meta: "Last hit.",
+            traits: { ruthless: 2, chaos: 1 }
+          },
+          {
+            label: "Disappear, start again, and pretend it never happened.",
+            meta: "Hard reset.",
+            traits: { anxious: 2, planner: 1 }
+          }
+        ]
+      }
+    ];
+
+    const totalQuestions = QUESTIONS.length;
+    let currentIndex = 0;
+    let traitScores = emptyTraitScores();
+    let answers = new Array(totalQuestions).fill(null);
+
+    const questionTextEl = document.getElementById("questionText");
+    const optionsGridEl = document.getElementById("optionsGrid");
+    const questionIndexLabel = document.getElementById("questionIndexLabel");
+    const questionTotalLabel = document.getElementById("questionTotalLabel");
+    const progressPercentLabel = document.getElementById("progressPercentLabel");
+    const progressFill = document.getElementById("progressFill");
+    const moodBadge = document.getElementById("moodBadge");
+    const moodLabel = document.getElementById("moodLabel");
+    const prevBtn = document.getElementById("prevBtn");
+    const nextBtn = document.getElementById("nextBtn");
+    const nextBtnLabel = document.getElementById("nextBtnLabel");
+    const helperText = document.getElementById("helperText");
+
+    const resultSection = document.getElementById("resultSection");
+    const characterNameEl = document.getElementById("characterName");
+    const characterAliasEl = document.getElementById("characterAlias");
+    const characterDescriptionEl = document.getElementById("characterDescription");
+    const traitChipsEl = document.getElementById("traitChips");
+    const resultMetaEl = document.getElementById("resultMeta");
+    const characterImageEl = document.getElementById("characterImage");
+    const portraitFallbackEl = document.getElementById("portraitFallback");
+    const restartBtn = document.getElementById("restartBtn");
+    const shareBtn = document.getElementById("shareBtn");
+
+    questionTotalLabel.textContent = String(totalQuestions);
+
+    function addTraits(traits, sign) {
+      for (const key of Object.keys(traits)) {
+        if (traitScores[key] !== undefined) {
+          traitScores[key] += sign * traits[key];
+        }
+      }
+    }
+
+    function updateProgress() {
+      const answeredCount = answers.filter((a) => a !== null).length;
+      const percent = Math.round((answeredCount / totalQuestions) * 100);
+      progressPercentLabel.textContent = `${percent}%`;
+      progressFill.style.width = `${percent}%`;
+    }
+
+    function highlightSelectedOption(index) {
+      const selectedIdx = answers[index];
+      const buttons = optionsGridEl.querySelectorAll(".option-card");
+      buttons.forEach((btn) => {
+        const idx = Number(btn.dataset.index);
+        if (idx === selectedIdx) {
+          btn.style.borderColor = "rgba(0,224,176,0.95)";
+          btn.style.boxShadow = "0 10px 24px rgba(0,224,176,0.35)";
+          btn.style.background = "#252d3e";
+        } else {
+          btn.style.borderColor = "rgba(255,255,255,0.08)";
+          btn.style.boxShadow = "0 14px 28px rgba(0,0,0,0.8)";
+          btn.style.background = "rgba(16,20,32,0.95)";
+        }
+      });
+    }
+
+    function renderQuestion(index) {
+      const q = QUESTIONS[index];
+      if (!q) return;
+
+      questionIndexLabel.textContent = String(index + 1);
+      moodBadge.textContent = q.moodIcon;
+      moodLabel.textContent = q.moodLabel;
+
+      questionTextEl.innerHTML = `
+        <span>${q.text}</span>
+        <span class="tone">Answer honestly. No one here is clean.</span>
+      `;
+
+      optionsGridEl.innerHTML = "";
+      q.options.forEach((opt, idx) => {
+        const optCard = document.createElement("button");
+        optCard.type = "button";
+        optCard.className = "option-card";
+        optCard.dataset.index = idx;
+
+        const keyLabel = String.fromCharCode(65 + idx);
+
+        optCard.innerHTML = `
+          <div class="option-key">${keyLabel}</div>
+          <div class="option-label">
+            ${opt.label}
+            <span class="meta">${opt.meta}</span>
+          </div>
+        `;
+
+        optCard.addEventListener("click", () => handleOptionSelect(index, idx));
+        optionsGridEl.appendChild(optCard);
+      });
+
+      const hasAnswer = answers[index] !== null;
+      prevBtn.classList.toggle("btn-disabled", index === 0);
+      nextBtnLabel.textContent =
+        index === totalQuestions - 1
+          ? hasAnswer
+            ? "Finish"
+            : "Skip & finish"
+          : hasAnswer
+          ? "Next"
+          : "Skip";
+      helperText.textContent = hasAnswer
+        ? "You can change your answer or go on."
+        : "Choose one option or skip if you like risk.";
+
+      updateProgress();
+      highlightSelectedOption(index);
+    }
+
+    function handleOptionSelect(questionIdx, optionIdx) {
+      const question = QUESTIONS[questionIdx];
+      const selectedOption = question.options[optionIdx];
+      if (!selectedOption) return;
+
+      const previousIdx = answers[questionIdx];
+
+      if (previousIdx !== null) {
+        const prevOption = question.options[previousIdx];
+        if (prevOption && prevOption.traits) {
+          addTraits(prevOption.traits, -1);
+        }
+      }
+
+      if (selectedOption.traits) {
+        addTraits(selectedOption.traits, 1);
+      }
+
+      answers[questionIdx] = optionIdx;
+
+      highlightSelectedOption(questionIdx);
+
+      const hasAnswer = answers[questionIdx] !== null;
+      nextBtnLabel.textContent =
+        questionIdx === totalQuestions - 1
+          ? "Finish"
+          : "Next";
+      helperText.textContent = "Answer saved. You can still go back.";
+      updateProgress();
+
+      if (questionIdx < totalQuestions - 1) {
+        setTimeout(() => {
+          goToQuestion(questionIdx + 1);
+        }, 220);
+      } else {
+        setTimeout(() => {
+          showResult();
+        }, 260);
+      }
+    }
+
+    function goToQuestion(index) {
+      if (index < 0 || index >= totalQuestions) return;
+      currentIndex = index;
+      renderQuestion(currentIndex);
+    }
+
+    function buildCharacterScores() {
+      const scores = {};
+      for (const [charKey, mapping] of Object.entries(TRAIT_TO_CHARACTER)) {
+        let total = 0;
+        for (const trait of TRAIT_KEYS) {
+          const charWeight = mapping[trait] || 0;
+          const traitScore = traitScores[trait] || 0;
+          total += charWeight * traitScore;
+        }
+        scores[charKey] = total;
+      }
+      return scores;
+    }
+
+    function pickCharacter(characterScores) {
+      const entries = Object.entries(characterScores);
+      const maxVal = Math.max(...entries.map(([_, v]) => v));
+      const topKeys = entries.filter(([_, v]) => v === maxVal).map(([k]) => k);
+
+      if (topKeys.length === 1) return topKeys[0];
+
+      const softPriority = [
+        "gale","jane","skinnyPete","badger","combo",
+        "lydia","todd","marie","hector","tuco",
+        "mike","skyler","hank","saul","jesse","gus","walter"
+      ];
+
+      for (const key of softPriority) {
+        if (topKeys.includes(key)) return key;
+      }
+
+      return topKeys[Math.floor(Math.random() * topKeys.length)];
+    }
+
+    function showResult() {
+      const scores = buildCharacterScores();
+      const totalTraitScore = Object.values(traitScores).reduce((a, b) => a + b, 0);
+
+      let key;
+      if (totalTraitScore === 0) {
+        const pool = [
+          "gale","jane","skinnyPete","badger","combo",
+          "lydia","todd","marie","hector","tuco",
+          "mike","skyler","hank","saul","jesse","gus","walter"
+        ];
+        key = pool[Math.floor(Math.random() * pool.length)];
+      } else {
+        key = pickCharacter(scores);
+      }
+
+      const data = CHARACTERS[key];
+      if (!data) return;
+
+      characterNameEl.textContent = data.name;
+      characterAliasEl.textContent = data.alias || "";
+      characterDescriptionEl.textContent = data.description;
+
+      traitChipsEl.innerHTML = "";
+      (data.traits || []).forEach((t) => {
+        const chip = document.createElement("span");
+        chip.className = "trait-chip";
+        chip.textContent = t;
+        traitChipsEl.appendChild(chip);
+      });
+
+      const chaosVal = traitScores.chaos || 0;
+      const planVal = traitScores.planner || 0;
+      let styleLabel = "";
+
+      if (totalTraitScore === 0) {
+        styleLabel = "You skipped most questions, so the quiz guessed a match for you from the whole cast.";
+      } else if (chaosVal > planVal + 2) {
+        styleLabel = "Your answers lean more to chaos and fast moves than slow control.";
+      } else if (planVal > chaosVal + 2) {
+        styleLabel = "Your answers lean more to planning and control than wild risk.";
+      } else {
+        styleLabel = "Your answers mix planning and chaos, so you live somewhere between control and trouble.";
+      }
+
+      resultMetaEl.textContent = styleLabel;
+
+      portraitFallbackEl.style.display = "none";
+      characterImageEl.style.display = "block";
+      if (data.img) {
+        characterImageEl.src = data.img;
+      } else {
+        characterImageEl.removeAttribute("src");
+      }
+      characterImageEl.alt = data.name + " portrait";
+
+      characterImageEl.onerror = () => {
+        characterImageEl.style.display = "none";
+        portraitFallbackEl.style.display = "flex";
+      };
+
+      resultSection.style.display = "block";
+
+      helperText.textContent =
+        "Quiz complete. Scroll down to see which disaster in human form you matched.";
+      nextBtn.classList.add("btn-disabled");
+      prevBtn.classList.remove("btn-disabled");
+    }
+
+    prevBtn.addEventListener("click", () => {
+      if (currentIndex > 0) {
+        goToQuestion(currentIndex - 1);
+      }
+    });
+
+    nextBtn.addEventListener("click", () => {
+      if (currentIndex === totalQuestions - 1) {
+        showResult();
+      } else {
+        goToQuestion(currentIndex + 1);
+      }
+    });
+
+    restartBtn.addEventListener("click", () => {
+      traitScores = emptyTraitScores();
+      answers = new Array(totalQuestions).fill(null);
+      currentIndex = 0;
+
+      resultSection.style.display = "none";
+
+      progressFill.style.width = "0%";
+      progressPercentLabel.textContent = "0%";
+      nextBtn.classList.remove("btn-disabled");
+      prevBtn.classList.add("btn-disabled");
+      nextBtnLabel.textContent = "Skip";
+      helperText.textContent =
+        "Choose one option. Tell the truth. Mostly.";
+
+      characterImageEl.style.display = "block";
+      characterImageEl.removeAttribute("src");
+      portraitFallbackEl.style.display = "none";
+
+      renderQuestion(currentIndex);
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+
+    shareBtn.addEventListener("click", async () => {
+      const characterName = characterNameEl.textContent || "a mystery match";
+      const text =
+        "I took a Breaking Bad quiz and got " +
+        characterName +
+        ". Which character are you?";
+      const url = window.location.href;
+
+      if (navigator.share) {
+        try {
+          await navigator.share({
+            title: "Which Breaking Bad Character Are You?",
+            text,
+            url
+          });
+        } catch (err) {
+          console.warn("Share canceled or failed:", err);
+        }
+      } else {
+        const fallback = text + " " + url;
+        try {
+          await navigator.clipboard.writeText(fallback);
+          alert("Share text copied. Paste it anywhere you like.");
+        } catch (err) {
+          alert("Sharing is not supported here. You can copy the URL by hand.");
+        }
+      }
+    });
+
+    renderQuestion(currentIndex);
+  </script>
+</body>
+</html>
