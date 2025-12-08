@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8">
   <title>Which Breaking Bad Character Are You?</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <style>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <style>
   :root {
     --bg-color: #050608;
     --bg-elevated: #11131a;
@@ -675,6 +675,7 @@
     }
   }
 </style>
+
 </head>
 <body>
   <div class="app-shell" id="appRoot">
@@ -683,22 +684,12 @@
         <div class="bb-pill">BB</div>
         <div class="title-stack">
           <h1>Which Breaking Bad Character Are You?</h1>
-          <p>
-            A dark, sarcastic quiz to see which Albuquerque troublemaker is closest to your mind.
-          </p>
+          <p>A dark, sarcastic quiz to see which Albuquerque troublemaker is closest to your mind.</p>
         </div>
       </div>
-      <div>
-        <div class="meta-pill-row">
-          <div class="meta-pill">
-            <span class="dot"></span>
-            <span><span class="highlight">12</span> short questions</span>
-          </div>
-          <div class="meta-pill">
-            <span class="dot"></span>
-            <span>Balanced results for all main characters</span>
-          </div>
-        </div>
+      <div class="meta-pill-row">
+        <div class="meta-pill"><span class="dot"></span><span><span class="highlight">12</span> short questions</span></div>
+        <div class="meta-pill"><span class="dot"></span><span>Balanced results for all main characters</span></div>
       </div>
     </header>
 
@@ -708,12 +699,7 @@
           <div class="top-row">
             <div class="progress-wrapper">
               <div class="progress-label-row">
-                <span>
-                  Question
-                  <strong id="questionIndexLabel">1</strong>
-                  /
-                  <strong id="questionTotalLabel">12</strong>
-                </span>
+                <span>Question <strong id="questionIndexLabel">1</strong> / <strong id="questionTotalLabel">12</strong></span>
                 <span id="progressPercentLabel">0%</span>
               </div>
               <div class="progress-bar">
@@ -721,36 +707,30 @@
               </div>
             </div>
             <div class="question-pill">
-              <span class="badge" id="moodBadge">⚗️</span>
+              <span class="badge" id="moodBadge"></span>
               <span id="moodLabel">First bad idea</span>
             </div>
           </div>
-
           <div id="questionContainer">
             <div class="question-text" id="questionText"></div>
             <div class="options-grid" id="optionsGrid"></div>
           </div>
-
           <div class="bottom-row">
             <div class="nav-row">
               <button class="btn btn-ghost btn-disabled" id="prevBtn" type="button">
-                <span class="icon">⟵</span>
-                <span>Back</span>
-              </button>
-              <button class="btn btn-primary" id="nextBtn" type="button">
-                <span class="label" id="nextBtnLabel">Skip</span>
-                <span class="icon">⟶</span>
+                <span class="icon">←</span> <span>Back</span>
               </button>
             </div>
-            <div class="helper-text" id="helperText">
-              Choose one option. <span class="em">Tell the truth. Mostly.</span>
-            </div>
+            <button class="btn btn-primary" id="nextBtn" type="button">
+              <span class="label" id="nextBtnLabel">Skip</span>
+              <span class="icon">→</span>
+            </button>
+            <div class="helper-text" id="helperText">Choose one option. <span class="em">Tell the truth. Mostly.</span></div>
           </div>
         </div>
       </section>
 
       <div class="pill-divider"></div>
-
       <section class="result-section" id="resultSection">
         <div class="result-inner" id="resultCard">
           <div class="result-main">
@@ -758,40 +738,29 @@
               <span class="bar"></span>
               <span>Your Breaking Bad match</span>
             </div>
-            <div class="result-name" id="characterName">–</div>
+            <div class="result-name" id="characterName"></div>
             <div class="result-alias" id="characterAlias"></div>
             <div class="result-description" id="characterDescription"></div>
             <div class="trait-chips" id="traitChips"></div>
             <div class="result-meta" id="resultMeta"></div>
-            <div class="screenshot-hint">
-              Your answers and traits add up to this match. Take a screenshot of this card if you want to save or share it.
-            </div>
+            <div class="screenshot-hint">Your answers and traits add up to this match. Take a screenshot of this card if you want to save or share it.</div>
             <div class="result-actions">
               <button class="btn btn-primary" id="restartBtn" type="button">
-                <span class="icon">🔁</span>
-                <span>Restart quiz</span>
+                <span class="icon">↺</span> <span>Restart quiz</span>
               </button>
               <button class="btn btn-share" id="shareBtn" type="button">
-                <span class="icon">📤</span>
-                <span>Share result</span>
+                <span class="icon">📱</span> <span>Share result</span>
               </button>
             </div>
             <div class="note-row">
-              <span class="warn">Disclaimer:</span>
-              No blue crystals were used to make this quiz.
+              <span class="warn">Disclaimer</span> No blue crystals were used to make this quiz.
             </div>
           </div>
           <div class="portrait-wrap">
             <div class="portrait-glow"></div>
             <div class="portrait-inner">
-              <img
-                id="characterImage"
-                src=""
-                alt="Breaking Bad character portrait"
-              />
-              <div class="portrait-fallback" id="portraitFallback">
-                Image could not load. Add or change the image link for this character in the code.
-              </div>
+              <img id="characterImage" src="" alt="Breaking Bad character portrait">
+              <div class="portrait-fallback" id="portraitFallback">Image could not load. Add or change the image link for this character in the code.</div>
             </div>
           </div>
         </div>
@@ -806,7 +775,7 @@
       walter: {
         name: "Walter White",
         alias: "Heisenberg",
-        img: "walterwhite.jpg",
+        img: "images/walterwhite.jpg",
         traits: ["Planner", "Proud", "Secretive"],
         description:
           "You plan hard, hide big things, and think you can fix any mess if you just think long enough."
@@ -814,7 +783,7 @@
       jesse: {
         name: "Jesse Pinkman",
         alias: "Cap n' Cook",
-        img: "Jesse pinkman.jpg",
+        img: "images/Jesse pinkman.jpg",
         traits: ["Emotional", "Loyal", "Messy"],
         description:
           "You feel things deeply, hurt hard, and still try to protect people even when you are falling apart."
@@ -822,7 +791,7 @@
       saul: {
         name: "Saul Goodman",
         alias: "James McGill",
-        img: "saul.jpg",
+        img: "images/saul.jpg",
         traits: ["Talker", "Smooth", "Rule bender"],
         description:
           "You talk fast, think fast, and always look for the trick that turns a bad deal into your win."
@@ -830,7 +799,7 @@
       skyler: {
         name: "Skyler White",
         alias: "Crisis Accountant",
-        img: "skyler.jpg",
+        img: "images/skyler.jpg",
         traits: ["Protective", "Smart", "Tired"],
         description:
           "You carry other people’s problems, try to keep things clean, and break rules only when you feel forced."
@@ -838,7 +807,7 @@
       mike: {
         name: "Mike Ehrmantraut",
         alias: "Problem Solver",
-        img: "mike.jpg",
+        img: "images/mike.jpg",
         traits: ["Calm", "Cold", "Careful"],
         description:
           "You stay quiet, watch everything, and step in only when you know exactly what needs to be done."
@@ -846,7 +815,7 @@
       gus: {
         name: "Gus Fring",
         alias: "The Chicken Man",
-        img: "Gus.jpg",
+        img: "images/Gustavo Fring.jpg",
         traits: ["Polite", "Serious", "Patient"],
         description:
           "You act calm, plan far ahead, and keep your anger under the surface until it is useful."
@@ -854,7 +823,7 @@
       hank: {
         name: "Hank Schrader",
         alias: "DEA Agent",
-        img: "hank.jpg",
+        img: "images/hank.jpg",
         traits: ["Brave", "Loud", "Stubborn"],
         description:
           "You rush in, joke a lot, and push forward even when you are scared or hurt."
@@ -862,7 +831,7 @@
       marie: {
         name: "Marie Schrader",
         alias: "Purple Problem",
-        img: "Marie Schrader.jpg",
+        img: "images/Marie Schrader.jpg",
         traits: ["Dramatic", "Sensitive", "Loyal"],
         description:
           "You feel slight things strongly, tell your side loudly, and still care a lot about your people."
@@ -870,7 +839,7 @@
       tuco: {
         name: "Tuco Salamanca",
         alias: "Chaos Engine",
-        img: "tuco.jpg",
+        img: "images/tuco.jpg",
         traits: ["Wild", "Fast", "Explosive"],
         description:
           "You jump first, shout later, and scare people without even trying when you get angry."
@@ -878,7 +847,7 @@
       lydia: {
         name: "Lydia Rodarte-Quayle",
         alias: "Nervous Boss",
-        img: "Lydia.jpg",
+        img: "images/Lydia.jpg",
         traits: ["Anxious", "Neat", "Careful"],
         description:
           "You worry about every detail, plan ten steps ahead, and still feel like something is about to go wrong."
@@ -886,7 +855,7 @@
       todd: {
         name: "Todd Alquist",
         alias: "Polite Problem",
-        img: "Todd.jpg",
+        img: "images/Todd.jpg",
         traits: ["Calm", "Cold", "Obedient"],
         description:
           "You stay polite, follow orders, and do scary things with a straight, friendly face."
@@ -894,7 +863,7 @@
       gale: {
         name: "Gale Boetticher",
         alias: "Nice Chemist",
-        img: "gale.jpg",
+        img: "images/gale.jpg",
         traits: ["Kind", "Nerdy", "Soft"],
         description:
           "You love your work, trust people too much, and want a quiet life even when the world is loud."
@@ -902,7 +871,7 @@
       jane: {
         name: "Jane Margolis",
         alias: "Runaway Artist",
-        img: "jane from breaking bad.jpg",
+        img: "images/jane from breaking bad.jpg",
         traits: ["Creative", "Guarded", "Hurting"],
         description:
           "You want freedom, hate being controlled, and sometimes pull away even from people you care about."
@@ -910,7 +879,7 @@
       combo: {
         name: "Combo Ortega",
         alias: "Street Friend",
-        img: "combo.jpg",
+        img: "images/combo.jpg",
         traits: ["Chill", "Risky", "Social"],
         description:
           "You like to hang out, say yes to wild ideas, and think the story will be worth it later."
@@ -918,7 +887,7 @@
       hector: {
         name: "Hector Salamanca",
         alias: "Bell Ringer",
-        img: "Hector Salamanca.jpg",
+        img: "images/Hector Salamanca.jpg",
         traits: ["Bitter", "Proud", "Old school"],
         description:
           "You never forget a hit, keep anger for years, and enjoy payback more than peace."
@@ -926,7 +895,7 @@
       skinnyPete: {
         name: "Skinny Pete",
         alias: "Chill Thinker",
-        img: "download (18).jpg",
+        img: "images/download (18).jpg",
         traits: ["Relaxed", "Deep", "Low key"],
         description:
           "You seem spaced out but notice more than people think, and you do not really want the spotlight."
@@ -934,7 +903,7 @@
       badger: {
         name: "Badger Mayhew",
         alias: "Idea Guy",
-        img: "download (17).jpg",
+        img: "images/download (17).jpg",
         traits: ["Funny", "Loyal", "Chaotic"],
         description:
           "You talk nonsense, make people laugh, and somehow end up in strange plans with your friends."
@@ -1696,8 +1665,3 @@
   </script>
 </body>
 </html>
-
-
-
-
-
