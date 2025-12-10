@@ -1,0 +1,823 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Which Stranger Things Character Are You? | Hawkins Shadow Quiz</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    :root{
+      --bg:#050309;
+      --accent:#e50914;
+      --accent-soft:#ff4b5c;
+      --text:#f5f5f5;
+      --text-soft:#b5b3d9;
+      --card:#0b0b15;
+      --card-soft:#161623;
+      --border-soft:#29253a;
+    }
+    body{
+      font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+      background:
+        radial-gradient(circle at top,#1f0824 0,transparent 55%),
+        radial-gradient(circle at bottom,#050309 0,var(--bg) 55%);
+      color:var(--text);
+      min-height:100vh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:16px;
+    }
+    .page{
+      max-width:820px;
+      width:100%;
+      display:flex;
+      flex-direction:column;
+      gap:22px;
+    }
+    .logo{
+      text-align:center;
+      text-transform:uppercase;
+      color:var(--text-soft);
+      letter-spacing:.16em;
+      font-size:.9rem;
+    }
+    .logo span{
+      display:block;
+      font-size:1.7rem;
+      letter-spacing:.3em;
+    }
+    .card{
+      background:var(--card);
+      border-radius:20px;
+      border:1px solid var(--border-soft);
+      box-shadow:0 20px 40px rgba(0,0,0,.8);
+      padding:20px 18px 22px;
+    }
+
+    .progress{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      margin-bottom:16px;
+      font-size:.8rem;
+      color:var(--text-soft);
+    }
+    .bar{
+      flex:1;
+      height:6px;
+      border-radius:999px;
+      background:#211728;
+      margin-right:10px;
+      overflow:hidden;
+    }
+    .bar-fill{
+      height:100%;
+      width:0%;
+      background:linear-gradient(90deg,var(--accent),var(--accent-soft));
+      transition:width .25s ease;
+    }
+
+    .question{
+      font-size:1.25rem;
+      line-height:1.5;
+      margin-bottom:18px;
+    }
+
+    .options{
+      display:flex;
+      flex-direction:column;
+      gap:14px;
+    }
+    .option{
+      position:relative;
+      display:flex;
+      align-items:flex-start;
+      gap:14px;
+      padding:13px 16px 13px 15px;
+      border-radius:999px;
+      background:radial-gradient(circle at 0 0,#201026 0,transparent 55%),#141323;
+      border:1px solid rgba(255,255,255,.06);
+      cursor:pointer;
+      transition:
+        transform .16s ease,
+        box-shadow .16s ease,
+        border-color .16s ease,
+        background .16s ease,
+        opacity .12s ease;
+      box-shadow:
+        0 0 0 1px rgba(255,255,255,.02),
+        0 14px 32px rgba(0,0,0,.9);
+    }
+    .option::before{
+      content:"";
+      position:absolute;
+      inset:1px;
+      border-radius:inherit;
+      border:1px solid rgba(255,255,255,.03);
+      pointer-events:none;
+    }
+    .option:hover{
+      transform:translateY(-1px);
+      box-shadow:
+        0 0 0 1px rgba(255,255,255,.05),
+        0 18px 36px rgba(0,0,0,.95);
+      border-color:rgba(255,255,255,.16);
+      background:radial-gradient(circle at 0 0,#261437 0,transparent 60%),#171729;
+    }
+    .option.selected{
+      border-color:var(--accent-soft);
+      box-shadow:
+        0 0 0 1px rgba(229,9,20,.55),
+        0 0 25px rgba(229,9,20,.35),
+        0 20px 40px rgba(0,0,0,1);
+      background:
+        radial-gradient(circle at 0 0,rgba(255,120,120,.4) 0,transparent 55%),
+        radial-gradient(circle at 100% 100%,rgba(255,120,120,.3) 0,transparent 55%),
+        #1d1016;
+    }
+    .opt-badge{
+      width:34px;
+      height:34px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.3);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:.8rem;
+      font-weight:700;
+      color:#ffe3e6;
+      flex-shrink:0;
+      background:rgba(229,9,20,.3);
+    }
+    .opt-text{
+      display:flex;
+      flex-direction:column;
+      gap:3px;
+    }
+    .opt-main{
+      font-size:.98rem;
+      font-weight:500;
+      color:var(--text);
+    }
+    .opt-sub{
+      font-size:.82rem;
+      color:var(--text-soft);
+    }
+
+    .nav{
+      margin-top:20px;
+      display:flex;
+      justify-content:space-between;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+    .btn{
+      border:none;
+      cursor:pointer;
+      border-radius:999px;
+      padding:9px 20px;
+      font-size:.8rem;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+      transition:.12s transform ease,.12s box-shadow ease,.12s opacity ease,.12s background ease;
+    }
+    .btn-primary{
+      background:var(--accent);
+      color:#fff;
+      box-shadow:0 6px 14px rgba(0,0,0,.7);
+    }
+    .btn-primary:disabled{
+      opacity:.4;
+      cursor:not-allowed;
+      box-shadow:none;
+    }
+    .btn-primary:not(:disabled):hover{
+      transform:translateY(-1px);
+      box-shadow:0 10px 20px rgba(0,0,0,.85);
+      background:#ff2432;
+    }
+    .btn-ghost{
+      background:transparent;
+      color:var(--text-soft);
+      border:1px solid rgba(255,255,255,.32);
+    }
+    .btn-ghost:hover{
+      transform:translateY(-1px);
+      box-shadow:0 6px 14px rgba(0,0,0,.75);
+      background:#181824;
+    }
+
+    .hidden{display:none}
+
+    .result-screen{
+      display:none;
+      align-items:center;
+      justify-content:center;
+    }
+    .result-screen.active{
+      display:flex;
+    }
+    .result-card{
+      position:relative;
+      max-width:460px;
+      width:100%;
+      border-radius:22px;
+      overflow:hidden;
+      box-shadow:0 24px 48px rgba(0,0,0,.95);
+    }
+    .result-bg{
+      position:absolute;
+      inset:0;
+    }
+    .result-bg img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      transform:scale(1.07);
+      opacity:0.9;
+    }
+    .result-overlay{
+      position:absolute;
+      inset:0;
+      background:
+        radial-gradient(circle at 10% 0,rgba(255,255,255,.45) 0,transparent 45%),
+        radial-gradient(circle at 90% 100%,rgba(255,210,120,.55) 0,transparent 55%),
+        linear-gradient(145deg,rgba(0,0,0,.7),rgba(0,0,0,.9));
+      mix-blend-mode:screen;
+      pointer-events:none;
+    }
+    .result-content{
+      position:relative;
+      padding:16px 16px 20px;
+      color:#fff;
+    }
+    .result-header-row{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      margin-bottom:4px;
+    }
+    .result-stage{
+      font-size:.75rem;
+      font-weight:700;
+      letter-spacing:.16em;
+    }
+    .result-sub{
+      font-size:.7rem;
+      opacity:.85;
+    }
+    .result-vibe-chip{
+      display:flex;
+      align-items:baseline;
+      gap:3px;
+      font-weight:700;
+    }
+    .rv-label{
+      font-size:.65rem;
+      letter-spacing:.2em;
+    }
+    .rv-value{
+      font-size:1.05rem;
+    }
+    .result-name-row{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      margin:4px 0 6px;
+    }
+    .result-name{
+      font-size:1.6rem;
+      letter-spacing:.18em;
+      text-transform:uppercase;
+    }
+    .result-tag{
+      font-size:.75rem;
+      padding:3px 8px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.7);
+      text-transform:uppercase;
+      letter-spacing:.12em;
+      background:rgba(0,0,0,.55);
+    }
+    .result-vibe{
+      font-size:.9rem;
+      line-height:1.5;
+      margin-bottom:5px;
+    }
+    .result-story{
+      font-size:.84rem;
+      line-height:1.55;
+      color:#f3dfea;
+    }
+    .result-stats{
+      margin-top:8px;
+      display:flex;
+      gap:8px;
+      flex-wrap:wrap;
+      font-size:.8rem;
+      color:#f0dde9;
+    }
+    .r-stat{
+      flex:1;
+      min-width:0;
+    }
+    .r-stat-label{
+      display:block;
+      text-transform:uppercase;
+      letter-spacing:.14em;
+      opacity:.75;
+    }
+    .r-stat-value{
+      display:block;
+    }
+    .result-btn{
+      margin-top:16px;
+      width:100%;
+      border:none;
+      border-radius:999px;
+      padding:9px 18px;
+      background:#e50914;
+      color:#fff;
+      font-size:.85rem;
+      letter-spacing:.12em;
+      text-transform:uppercase;
+      cursor:pointer;
+      box-shadow:0 8px 20px rgba(0,0,0,.85);
+    }
+    .result-btn:hover{
+      background:#ff2432;
+    }
+
+    @media (max-width:600px){
+      body{padding:10px;}
+      .card{padding:18px 12px 20px;}
+      .question{font-size:1.1rem;}
+      .opt-main{font-size:.93rem;}
+      .opt-sub{font-size:.8rem;}
+      .result-name{font-size:1.35rem;}
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <div class="logo">
+      WHICH STRANGER THINGS CHARACTER ARE YOU?
+      <span>QUIZ</span>
+    </div>
+
+    <!-- QUIZ SCREEN -->
+    <section id="quizScreen" class="card">
+      <div class="progress">
+        <div class="bar"><div class="bar-fill" id="barFill"></div></div>
+        <div id="qCount">1 / 12</div>
+      </div>
+      <div class="question" id="questionText"></div>
+      <div class="options" id="optionsWrap"></div>
+      <div class="nav">
+        <button class="btn btn-ghost" id="prevBtn" disabled>Back</button>
+        <button class="btn btn-primary" id="nextBtn" disabled>Next</button>
+      </div>
+    </section>
+
+    <!-- RESULT SCREEN -->
+    <section id="resultScreen" class="result-screen">
+      <div>
+        <div class="result-card">
+          <div class="result-bg">
+            <img id="resImg" src="" alt="Character background">
+            <div class="result-overlay"></div>
+          </div>
+          <div class="result-content">
+            <div class="result-header-row">
+              <div>
+                <div class="result-stage">STRANGER THINGS</div>
+                <div class="result-sub">Personality Match</div>
+              </div>
+              <div class="result-vibe-chip">
+                <span class="rv-label">VIBE</span>
+                <span class="rv-value" id="resHp">MAX</span>
+              </div>
+            </div>
+
+            <div class="result-name-row">
+              <div class="result-name" id="resName">ELEVEN</div>
+              <div class="result-tag" id="resTag">THE WEAPON</div>
+            </div>
+
+            <p class="result-vibe" id="resVibe"></p>
+            <p class="result-story" id="resStory"></p>
+
+            <div class="result-stats">
+              <div class="r-stat">
+                <span class="r-stat-label">Trait 1</span>
+                <span class="r-stat-value" id="resT1"></span>
+              </div>
+              <div class="r-stat">
+                <span class="r-stat-label">Trait 2</span>
+                <span class="r-stat-value" id="resT2"></span>
+              </div>
+              <div class="r-stat">
+                <span class="r-stat-label">Trait 3</span>
+                <span class="r-stat-value" id="resT3"></span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <button class="result-btn" id="restartBtn">Retake quiz</button>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    const quizData = [
+      {
+        q:"Late at night, strange things keep happening around you. What’s your first thought?",
+        options:[
+          {main:"This might actually be connected to me somehow.", sub:"You feel involved without proof.", char:"eleven"},
+          {main:"Something bad is about to happen, I can feel it.", sub:"Your instincts stay on edge.", char:"will"},
+          {main:"This makes no sense… and I need to understand it.", sub:"Confusion excites you.", char:"dustin"},
+          {main:"Whatever it is, I’m ready to face it head-on.", sub:"You prepare for impact.", char:"hopper"},
+          {main:"It doesn’t feel random, but I won’t jump to conclusions.", sub:"You trust slow logic.", char:"nancy"}
+        ]
+      },
+      {
+        q:"A close friend starts behaving very differently than usual. You:",
+        options:[
+          {main:"Stick close and protect them without questioning much.", sub:"Shield first, think later.", char:"eleven"},
+          {main:"Stay loyal even when you’re confused.", sub:"You don’t abandon people.", char:"mike"},
+          {main:"Joke about it even though you’re worried.", sub:"Fear hides behind humor.", char:"dustin"},
+          {main:"Get serious and prepare for things to go wrong.", sub:"You expect the worst.", char:"hopper"},
+          {main:"Watch quietly and try to figure it out first.", sub:"Observation before reaction.", char:"jonathan"}
+        ]
+      },
+      {
+        q:"When trouble suddenly appears, people usually see you as the:",
+        options:[
+          {main:"Quiet one who gets things done.", sub:"Action over noise.", char:"eleven"},
+          {main:"One who keeps everyone emotionally together.", sub:"You steady the room.", char:"mike"},
+          {main:"One who thinks fast and cracks jokes.", sub:"Brains with comedy.", char:"dustin"},
+          {main:"One who steps in front of danger.", sub:"You take the hit.", char:"hopper"},
+          {main:"One who questions everything.", sub:"Nothing passes blindly.", char:"nancy"}
+        ]
+      },
+      {
+        q:"You find out a secret that could change everything between people. You:",
+        options:[
+          {main:"Keep it to yourself no matter how heavy it feels.", sub:"You carry silent weight.", char:"eleven"},
+          {main:"Share it only with the person you trust most.", sub:"One bond matters most.", char:"will"},
+          {main:"Hint at it while trying to lighten the mood.", sub:"Nerves make you talk.", char:"dustin"},
+          {main:"Confront the person involved immediately.", sub:"You hate delay.", char:"nancy"},
+          {main:"Dig deeper before saying anything.", sub:"Truth must be whole.", char:"jonathan"}
+        ]
+      },
+      {
+        q:"You’re stuck somewhere unfamiliar and unsafe. What scares you the most?",
+        options:[
+          {main:"Feeling like you might lose control of yourself.", sub:"You fear your own limits.", char:"eleven"},
+          {main:"Being cut off from the people you care about.", sub:"Loneliness terrifies you.", char:"will"},
+          {main:"Not understanding what’s really happening.", sub:"Unknown rules stress you.", char:"dustin"},
+          {main:"Not being strong enough to protect anyone.", sub:"You fear failing others.", char:"hopper"},
+          {main:"Trusting the wrong assumption.", sub:"One mistake feels fatal.", char:"nancy"}
+        ]
+      },
+      {
+        q:"When your group starts arguing, you usually:",
+        options:[
+          {main:"Act first and explain later.", sub:"Movement over discussion.", char:"eleven"},
+          {main:"Try to calm everyone down emotionally.", sub:"You hate emotional fallout.", char:"mike"},
+          {main:"Use humor to break the tension.", sub:"Laughter eases panic.", char:"dustin"},
+          {main:"Push everyone to make a quick decision.", sub:"Delay feels dangerous.", char:"hopper"},
+          {main:"Focus strictly on what makes the most sense.", sub:"Feelings come second.", char:"nancy"}
+        ]
+      },
+      {
+        q:"Someone you love is in danger, and saving them breaks every rule. You:",
+        options:[
+          {main:"Break the rules instantly without thinking twice.", sub:"Rules never stop you.", char:"eleven"},
+          {main:"Struggle emotionally, then still do it.", sub:"Heart beats fear.", char:"mike"},
+          {main:"Look for any smarter, safer alternative.", sub:"There’s always another way.", char:"dustin"},
+          {main:"Accept the risk and move immediately.", sub:"You absorb the danger.", char:"hopper"},
+          {main:"Analyze every option until the last moment.", sub:"You push the limit carefully.", char:"nancy"}
+        ]
+      },
+      {
+        q:"When life hits you hard, you usually cope by:",
+        options:[
+          {main:"Shutting down emotionally.", sub:"Silence becomes your armor.", char:"eleven"},
+          {main:"Holding on tighter to people.", sub:"Connection keeps you upright.", char:"mike"},
+          {main:"Using humor to avoid the pain.", sub:"Jokes hide cracks.", char:"dustin"},
+          {main:"Turning anger into motivation.", sub:"Rage keeps you moving.", char:"hopper"},
+          {main:"Pulling away to think things through alone.", sub:"You process in isolation.", char:"jonathan"}
+        ]
+      },
+      {
+        q:"You’re offered great power that will permanently change your life. You choose:",
+        options:[
+          {main:"Take it, no matter the cost.", sub:"Control feels necessary.", char:"vecna"},
+          {main:"Take it only to protect others.", sub:"You’ll bear the damage.", char:"eleven"},
+          {main:"Take it only if you fully understand it.", sub:"You refuse blind power.", char:"dustin"},
+          {main:"Take it if it prevents future harm.", sub:"You’d trade yourself for peace.", char:"hopper"},
+          {main:"Walk away because power always has a price.", sub:"Some doors shouldn’t open.", char:"will"}
+        ]
+      },
+      {
+        q:"If your group were to fall apart someday, you think it would be because of:",
+        options:[
+          {main:"Too many secrets.", sub:"Truth delayed becomes poison.", char:"nancy"},
+          {main:"People misunderstanding each other emotionally.", sub:"Hearts drift silently.", char:"mike"},
+          {main:"Clashing personalities.", sub:"Too many egos collide.", char:"steve"},
+          {main:"Fear controlling decisions.", sub:"Panic ruins judgment.", char:"hopper"},
+          {main:"Someone going too far with obsession.", sub:"Focus becomes distortion.", char:"vecna"}
+        ]
+      },
+      {
+        q:"Deep down, people around you probably see you as the:",
+        options:[
+          {main:"Mysterious one.", sub:"They don’t fully understand you.", char:"eleven"},
+          {main:"Emotional core of the group.", sub:"You hold the feelings.", char:"mike"},
+          {main:"Smart but unpredictable one.", sub:"Brilliance with chaos.", char:"dustin"},
+          {main:"The one who always protects.", sub:"You stand in front.", char:"hopper"},
+          {main:"Quiet observer who sees the truth.", sub:"You notice what’s hidden.", char:"nancy"}
+        ]
+      },
+      {
+        q:"Honestly — in a dangerous, unpredictable world, you believe you would survive mostly because of:",
+        options:[
+          {main:"Something unusual about you.", sub:"You’re not ordinary.", char:"eleven"},
+          {main:"Your close bonds with others.", sub:"People keep you alive.", char:"mike"},
+          {main:"Your intelligence and curiosity.", sub:"Your mind saves you.", char:"dustin"},
+          {main:"Your strength and boldness.", sub:"You push back harder.", char:"hopper"},
+          {main:"Your caution and awareness.", sub:"You sense danger early.", char:"will"}
+        ]
+      }
+    ];
+
+    const resultData = {
+      eleven:{
+        name:"ELEVEN",
+        tag:"THE WEAPON",
+        img:"images/Eleven _ Stranger Things.jpg",
+        vibeShort:"RAW POWER",
+        vibe:"Intense, quiet, and terrifying when someone crosses your line.",
+        story:"You carry heavy scars and heavier power. You don’t always trust yourself, but when people you love are in danger, you become the storm that stands in the way.",
+        t1:"Power: 10 / 10",
+        t2:"Loyalty: 10 / 10",
+        t3:"Control: 6 / 10"
+      },
+      mike:{
+        name:"MIKE",
+        tag:"THE HEART",
+        img:"images/mikeeeee.jpg",
+        vibeShort:"RIDE‑OR‑DIE",
+        vibe:"Emotional, stubborn, and willing to burn bridges for the people you love.",
+        story:"You lead with feelings, not logic. You might make messy choices, but no one doubts that when everything falls apart, your love is the thing that keeps the group moving.",
+        t1:"Heart: 10 / 10",
+        t2:"Impulsiveness: 8 / 10",
+        t3:"Calm: 3 / 10"
+      },
+      dustin:{
+        name:"DUSTIN",
+        tag:"THE NERD HERO",
+        img:"images/dustin henderson poster season 5.jpg",
+        vibeShort:"CHAOTIC GENIUS",
+        vibe:"You solve monsters like puzzles and still find time to crack a joke.",
+        story:"Your brain is your superpower, but your humor is what saves everyone’s sanity. You read clues, build theories, and somehow make the end of the world feel like a science project.",
+        t1:"Brain: 9 / 10",
+        t2:"Humor: 10 / 10",
+        t3:"Risk-taking: 7 / 10"
+      },
+      will:{
+        name:"WILL BYERS",
+        tag:"THE ECHO",
+        img:"images/will.jpg",
+        vibeShort:"SENSITIVE BEACON",
+        vibe:"You feel the storm long before anyone sees a cloud.",
+        story:"You’re tuned into every emotional and supernatural shift around you. People underestimate your strength, but survival has already taught you how to live with fear and still move forward.",
+        t1:"Sensitivity: 10 / 10",
+        t2:"Awareness: 9 / 10",
+        t3:"Visibility: 4 / 10"
+      },
+      hopper:{
+        name:"HOPPER",
+        tag:"THE GUARD DOG",
+        img:"images/hopper.jpg",
+        vibeShort:"GRUMPY HERO",
+        vibe:"Tired of everyone’s nonsense but still the first through the door.",
+        story:"You act like you’re done, but you never actually are. You carry anger, guilt, and grief, yet when it’s time to stand between danger and your people, you don’t hesitate for a second.",
+        t1:"Protectiveness: 10 / 10",
+        t2:"Trust issues: 9 / 10",
+        t3:"Soft side shown: 2 / 10"
+      },
+      nancy:{
+        name:"NANCY",
+        tag:"THE INVESTIGATOR",
+        img:"images/nancy wheeler _ ST5 official poster.jpg",
+        vibeShort:"SHARP MIND",
+        vibe:"You tear lies apart until the truth is the only thing left.",
+        story:"You can’t sit still when something doesn’t add up. You follow threads, connect dots, and push people to face what they’d rather ignore — even if it makes you the problem in the room.",
+        t1:"Logic: 9 / 10",
+        t2:"Bravery: 8 / 10",
+        t3:"Patience: 5 / 10"
+      },
+      jonathan:{
+        name:"JONATHAN",
+        tag:"THE QUIET LENS",
+        img:"images/jonathan.jpg",
+        vibeShort:"WATCHFUL SOUL",
+        vibe:"You stay in the background, but you see everything.",
+        story:"You carry your camera in your mind, recording what other people miss. You won’t rush into the spotlight, but when it matters, your insight and loyalty hit harder than any speech.",
+        t1:"Observation: 10 / 10",
+        t2:"Loyalty: 9 / 10",
+        t3:"Spotlight need: 2 / 10"
+      },
+      steve:{
+        name:"STEVE",
+        tag:"THE REFORMED KING",
+        img:"images/steve harrington poster !!.jpg",
+        vibeShort:"COOL GUARDIAN",
+        vibe:"From self-centered to babysitter of the apocalypse.",
+        story:"You used to care about image; now you care about kids with nail bats and bloody noses. You protect with style, humor, and the kind of growth people don’t always notice right away.",
+        t1:"Charm: 9 / 10",
+        t2:"Growth: 8 / 10",
+        t3:"Hair volume: 11 / 10"
+      },
+      vecna:{
+        name:"VECNA",
+        tag:"THE CURSED MIND",
+        img:"images/stranger things season 4.jpg",
+        vibeShort:"CONTROL FREAK",
+        vibe:"You don’t just want safety — you want total control over the board.",
+        story:"You believe the world is broken and only extreme force can fix it. Your power comes from pain, and instead of healing, you turn it outward, trying to bend everything to your design.",
+        t1:"Control hunger: 10 / 10",
+        t2:"Empathy: 1 / 10",
+        t3:"Long‑term planning: 9 / 10"
+      },
+      max:{
+        name:"MAX",
+        tag:"THE RUNAWAY",
+        img:"images/max.jpg",
+        vibeShort:"REBEL SOUL",
+        vibe:"Walls high, music loud, feelings deeper than you admit.",
+        story:"You pretend nothing touches you, but you feel things hard. You use speed, sarcasm, and music to outrun what haunts you, yet when it’s someone else in danger, you’re the one who runs toward it.",
+        t1:"Defiance: 9 / 10",
+        t2:"Vulnerability shared: 4 / 10",
+        t3:"Survival instinct: 9 / 10"
+      }
+    };
+
+    let current = 0;
+    const answers = [];
+
+    const qText       = document.getElementById("questionText");
+    const optionsEl   = document.getElementById("optionsWrap");
+    const prevBtn     = document.getElementById("prevBtn");
+    const nextBtn     = document.getElementById("nextBtn");
+    const barFill     = document.getElementById("barFill");
+    const qCount      = document.getElementById("qCount");
+    const quizScreen  = document.getElementById("quizScreen");
+    const resultScreen= document.getElementById("resultScreen");
+
+    function renderQuestion(){
+      const data = quizData[current];
+      qText.textContent = data.q;
+      optionsEl.innerHTML = "";
+      const letters = ["A","B","C","D","E"];
+
+      data.options.forEach((opt,idx)=>{
+        const wrap = document.createElement("div");
+        wrap.className = "option";
+
+        const badge = document.createElement("div");
+        badge.className = "opt-badge";
+        badge.textContent = letters[idx];
+
+        const textBox = document.createElement("div");
+        textBox.className = "opt-text";
+
+        const main = document.createElement("div");
+        main.className = "opt-main";
+        main.textContent = opt.main;
+
+        const sub = document.createElement("div");
+        sub.className = "opt-sub";
+        sub.textContent = opt.sub;
+
+        textBox.appendChild(main);
+        textBox.appendChild(sub);
+        wrap.appendChild(badge);
+        wrap.appendChild(textBox);
+
+        if(answers[current] && answers[current].index === idx){
+          wrap.classList.add("selected");
+        }
+
+        wrap.onclick = ()=>{
+          answers[current] = {index:idx,char:opt.char};
+          document.querySelectorAll(".option").forEach(o=>o.classList.remove("selected"));
+          wrap.classList.add("selected");
+          nextBtn.disabled = false;
+        };
+
+        optionsEl.appendChild(wrap);
+      });
+
+      barFill.style.width = ((current+1)/quizData.length*100) + "%";
+      qCount.textContent  = (current+1)+" / "+quizData.length;
+      prevBtn.disabled    = current === 0;
+      nextBtn.disabled    = !answers[current];
+      nextBtn.textContent = current === quizData.length-1 ? "See result" : "Next";
+    }
+
+    nextBtn.addEventListener("click",()=>{
+      if(!answers[current]) return;
+      if(current < quizData.length-1){
+        current++;
+        renderQuestion();
+      } else {
+        showResult();
+      }
+    });
+
+    prevBtn.addEventListener("click",()=>{
+      if(current>0){
+        current--;
+        renderQuestion();
+      }
+    });
+
+    // Precompute how many times each character appears in the quiz
+    const charAppearances = {
+      eleven:0,mike:0,dustin:0,will:0,hopper:0,
+      nancy:0,jonathan:0,steve:0,vecna:0,max:0
+    };
+    quizData.forEach(q=>{
+      q.options.forEach(o=>{
+        if(charAppearances[o.char] != null){
+          charAppearances[o.char]++;
+        }
+      });
+    });
+
+    function calculateBestCharacter(){
+      const pickCounts = {
+        eleven:0,mike:0,dustin:0,will:0,hopper:0,
+        nancy:0,jonathan:0,steve:0,vecna:0,max:0
+      };
+
+      answers.forEach(a=>{
+        if(a && pickCounts[a.char] != null){
+          pickCounts[a.char]++;
+        }
+      });
+
+      let bestKey = "eleven";
+      let bestScore = -Infinity;
+
+      Object.keys(pickCounts).forEach(key=>{
+        const appears = charAppearances[key] || 1;
+        const raw = pickCounts[key];
+        const normalized = raw / appears; // percentage of times chosen when shown
+        if(normalized > bestScore){
+          bestScore = normalized;
+          bestKey = key;
+        }
+      });
+
+      return bestKey;
+    }
+
+    function showResult(){
+      const best = calculateBestCharacter();
+      const d = resultData[best];
+
+      document.getElementById("resName").textContent = d.name;
+      document.getElementById("resTag").textContent  = d.tag;
+      document.getElementById("resImg").src          = d.img;
+      document.getElementById("resImg").alt          = d.name + " background";
+      document.getElementById("resHp").textContent   = d.vibeShort;
+      document.getElementById("resVibe").textContent = d.vibe;
+      document.getElementById("resStory").textContent= d.story;
+      document.getElementById("resT1").textContent   = d.t1;
+      document.getElementById("resT2").textContent   = d.t2;
+      document.getElementById("resT3").textContent   = d.t3;
+
+      quizScreen.classList.add("hidden");
+      resultScreen.classList.add("active");
+      window.scrollTo({top:0,behavior:"smooth"});
+    }
+
+    document.getElementById("restartBtn").addEventListener("click",()=>{
+      current = 0;
+      answers.length = 0;
+      resultScreen.classList.remove("active");
+      quizScreen.classList.remove("hidden");
+      renderQuestion();
+      window.scrollTo({top:0,behavior:"smooth"});
+    });
+
+    renderQuestion();
+  </script>
+</body>
+</html>
